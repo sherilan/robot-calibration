@@ -1,6 +1,22 @@
 # robot-calibration
 Attempt at calibrating the ur10e robot + mocap system for exposed demo.
 
+## Model
+
+The system assumes that the xyz world coordinates of the pen tip can be given by
+
+```
+[x, y, z, 1]' = Tb * Te * Tr * Tp * [0, 0, 0, 1]'
+```
+
+Where:
+
+- `Tb` is the transform from the world frame to the robot base (as given by the mocap system)
+- `Te` is the transform that corrects for the error we made when eyeballing the robot base in the mocap system
+- `Tr` is the transform from the robot base to the robot end-effector (as given by the robot's forward kinematics)
+- `Tp` is the transform from the end-effector to the pen tip (simple translation along z is assumed)
+
+This code estimates `Te` (`a`: rotation around z-axis, `xyz`: xyz translation) and `Tp` (`p`: translation along z) by minimizing the squared euclidean distance between the predicted position of the pen (see equation above) and the observed position (e.g. given by mocap tracking).
 
 ## Usage 
 
