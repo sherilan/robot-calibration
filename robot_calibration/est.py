@@ -24,6 +24,10 @@ def to_tensor(x):
     """Converts numpy array to double precision torch tensor"""
     return torch.tensor(x, dtype=torch.float64)
 
+def min_ang(a):
+    """Reduces the absolute value of an angle"""
+    return min([a, a % (2 * np.pi), a % (-2 * np.pi)], key=abs)
+
 class Dataset:
 
     def __init__(self, sim_data, obs_noise=0.0):
@@ -72,7 +76,7 @@ class Estimator(torch.nn.Module):
                 x=self.x.item(),
                 y=self.y.item(),
                 z=self.z.item(),
-                a=self.a.item(),
+                a=min_ang(self.a.item()),
                 p=self.p.item(),
             )
 
@@ -89,6 +93,10 @@ class Estimator(torch.nn.Module):
                 a=(self.a - a).item(),
                 p=(self.p - p).item(),
             )
+
+    @property
+    def transforms(self):
+        return torch.stack([self.Te, self.Tp], axis=0).detach().numpy()
 
     @property
     def Te(self):
