@@ -21,7 +21,7 @@ This code estimates `Te` (`a`: rotation around z-axis, `xyz`: xyz translation) a
 ## Usage 
 
 ```bash
-python -m robot_calibration <ipt-file> --verbose --out <out-file> --format transforms
+python -m robot_calibration <ipt-file> --verbose --out <out-file> --fmt transforms
 ```
 
 Notes:

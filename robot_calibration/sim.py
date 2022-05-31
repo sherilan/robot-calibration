@@ -189,7 +189,7 @@ parser.add_argument('--err_z_scale', default=0, type=float)
 parser.add_argument('--err_a_scale', default=0, type=float)
 parser.add_argument('--err_p_scale', default=0, type=float)
 
-parser.add_argument('--seed', default=np.random.randint(1, 1<<32), type=int)
+parser.add_argument('--seed', default=np.random.randint(1, 1<<32 - 1), type=int)
 parser.add_argument('--sim_data')
 parser.add_argument('--sim_params')
 
